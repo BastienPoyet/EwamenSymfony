@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projects{% endblock %}
+
+{% block body %}
+<h2 class="text-center">Projets</h2>
+<a href="{{ path('admin-add-project') }}" class="btn btn-outline-success m-2">Ajouter un projet</a>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Nom du projet</th>
+      <th scope="col">Statut</th>
+      <th scope="col">Tâches</th>
+      <th scope="col">Ajouté le</th>
+      <th scope="col">Terminé le</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for project in projects %}
+    <tr>
+      <td>{{project.name}}</td>
+      <td>{{project.statut}}</td>
+      {% set nbreTasks = 0 %}
+      {% for countTask in countTasks %}
+        {% if countTask['id'] == project.id %}
+          {% set nbreTasks = countTask['nbrTasks'] %}
+        {% endif %}
+      {% endfor %}
+      <td>{{nbreTasks}}</td>      
+      <td>{{project.getStartedAt()|date("d/m/Y")}}</td>
+      {% if project.getEndedAt() == null %}
+      <td>Non fini</td>
+      {% else %}
+      <td>{{project.getEndedAt()|date("d/m/Y")}}</td>
+      {% endif %}
+      <td><a href="{{path('admin-project',{'id':project.getId()})}}">Gérer</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

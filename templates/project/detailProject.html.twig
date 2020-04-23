@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Detail projet{% endblock %}
+
+{% block body %}
+<h2 class="text-center">Détail du projet : {{project.name}}</h2>
+<p>Crée le : {{project.startedAt|date("d/m/Y")}}</p>
+{% set nbreTasks = 0 %}
+      {% for countTask in countTasks %}
+        {% if countTask['id'] == project.id %}
+          {% set nbreTasks = countTask['nbrTasks'] %}
+        {% endif %}
+      {% endfor %}
+<p>Nombre de tâches : {{nbreTasks}}</p>
+{% if project.statut != "Terminé" %}
+<a href="{{ path('admin-add-task',{'id':project.getId()}) }}" class="btn btn-outline-success m-2">Ajouter une tâche</a>
+{{form(form)}}
+{% endif %}
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Nom de la tâche</th>
+      <th scope="col">Description</th>
+      <th scope="col">Ajouté le</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for task in tasks %}
+    <tr>
+      <td>{{task.title}}</td>
+      <td>{{task.description}}</td>
+      <td>{{task.getCreatedAt()|date("d/m/Y")}}</td>    
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

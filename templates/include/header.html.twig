@@ -1,0 +1,22 @@
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-success text-white">
+        <a class="navbar-brand text-white" href="{{path('admin-projects')}}">ProjectHub</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto">
+            {% if app.user %}  
+            <li class="nav-item mr-2">
+                <a href="{{path('admin-projects')}}" class="text-white">Liste des projets</a>
+            </li>
+            <li class="nav-item mr-2">
+                <a href="{{ path('app_logout') }}" class="text-white">Logout</a>
+            </li>
+            <li class="nav-item">
+                 <p>Vous êtes connecté en tant que {{ app.user.username }}</p>
+            </li>
+            {% endif %}
+            </ul>
+        </div>
+    </nav>  
